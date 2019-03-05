@@ -1,0 +1,7 @@
+version: '2.2'
+services:
+  fleet-manager:
+    build: .
+    container_name: 'FleetManager'
+    ports:
+      - 8090:8090
