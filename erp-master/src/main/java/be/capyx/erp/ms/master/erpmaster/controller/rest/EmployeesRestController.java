@@ -3,6 +3,7 @@ package be.capyx.erp.ms.master.erpmaster.controller.rest;
 
 import be.capyx.erp.ms.master.erpmaster.domain.Car;
 import be.capyx.erp.ms.master.erpmaster.domain.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +17,11 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeesRestController {
 
+    @Autowired
+    private RestTemplate restTemplate ;
 
-    private final static String url = "http://localhost:8090/fleet/";
+
+    private final static String url = "http://fleet-manager/fleet/";
     @GetMapping("/allasArray")
     public Object[] getEmployeesAsArrayWithHead() {
 
@@ -47,8 +51,7 @@ public class EmployeesRestController {
 
 
     public String getCarOf(String uuid){
-        RestTemplate template = new RestTemplate();
-        ResponseEntity<Car> response = template.getForEntity(url + uuid, Car.class);
+        ResponseEntity<Car> response = restTemplate.getForEntity(url + uuid, Car.class);
         return response.getBody().getRegistrationNumber();
     }
 
